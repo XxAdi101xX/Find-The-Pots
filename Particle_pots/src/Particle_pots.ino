@@ -11,9 +11,14 @@ void setup()
   Wire.begin();
   accelemeter.init();
   Serial.begin(9600);
+
+
 }
 void loop()
 {
+
+
+// accelemeter stuff
   int8_t x;
   int8_t y;
   int8_t z;
@@ -36,5 +41,12 @@ void loop()
   Serial.print(az);
   Serial.println(" g");
   Serial.println("*************");
+  delay(500);
+
+//int z_test = 44;
+
+String z_val = String(az);
+
+  Particle.publish("z_val", z_val, PRIVATE);
   delay(500);
 }
