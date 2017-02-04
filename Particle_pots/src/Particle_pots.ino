@@ -12,6 +12,8 @@ void setup()
   accelemeter.init();
   Serial.begin(9600);
 
+  // Subscribe to the integration response event
+  Particle.subscribe("hook-response/z_val", myHandler, MY_DEVICES);
 
 }
 void loop()
@@ -48,5 +50,10 @@ void loop()
 String z_val = String(az);
 
   Particle.publish("z_val", z_val, PRIVATE);
-  delay(500);
+  delay(5000);
+}
+
+void myHandler(const char *event, const char *data) {
+  // Handle the integration response
+  Serial.println("event");
 }
