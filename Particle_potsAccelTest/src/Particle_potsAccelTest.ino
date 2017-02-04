@@ -7,7 +7,7 @@
 MMA7660 accelemeter;
 void setup()
 {
-  Wire.setSpeed(120);
+  Wire.setSpeed(100000);
   Wire.begin();
   accelemeter.init();
   Serial.begin(9600);
@@ -36,5 +36,5 @@ void loop()
   Serial.print(az);
   Serial.println(" g");
   Serial.println("*************");
-  delay(500);
+  delay(2000);
 }

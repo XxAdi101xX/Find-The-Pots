@@ -164,9 +164,14 @@ bool MMA7660::getAcceleration(float *ax,float *ay,float *az)
 {
     int8_t x,y,z;
     if(!getXYZ(&x,&y,&z))return 0;
-    *ax = x/21.00;
-    *ay = y/21.00;
-    *az = (z/21.00);
+    /*ax = (x/21.00)
+    *ay = (y/21.00);
+    *az = (z/21.00);*/
+
+
+    *ax = accLookup[x];
+    *ay = accLookup[y];
+    *az = accLookup[z];
 
     return 1;
 }
