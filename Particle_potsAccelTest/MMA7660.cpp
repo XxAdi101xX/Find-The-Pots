@@ -166,7 +166,7 @@ bool MMA7660::getAcceleration(float *ax,float *ay,float *az)
     if(!getXYZ(&x,&y,&z))return 0;
     *ax = x/21.00;
     *ay = y/21.00;
-    *az = z;
+    *az = (z/21.00);
 
     return 1;
 }
