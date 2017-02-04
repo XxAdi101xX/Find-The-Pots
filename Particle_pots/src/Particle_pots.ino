@@ -25,8 +25,15 @@ void loop()
 
   accelerometer.getAcceleration(&accelData); //get accel data from accelerometer
 
+  if ((accelData.z.g > 1.4) || (accelData.z.g < 0.6)){ //publish only if 'event' has occured
+    Serial.print("event");
+    Serial.println(accelData.z.g);
+    String z_val = String(accelData.z.g); //convert float to string
 
-  Serial.println("accleration of X/Y/Z: ");
+    Particle.publish("z_val", z_val, PRIVATE); //publish z value
+
+  }
+  /* Serial.println("accleration of X/Y/Z: ");
 
   Serial.print(accelData.x.g); //print x acceleration
   Serial.println(" g");
@@ -36,13 +43,10 @@ void loop()
 
   Serial.print(accelData.z.g); //print z acceleration
   Serial.println(" g");
-  Serial.println("*************");
-  delay(2000);
+  Serial.println("*************"); */
+  delay(500);
 
 
 
-String z_val = String(accelData.z.g); //convert float to string
 
-  Particle.publish("z_val", z_val, PRIVATE); //publish z value 
-  delay(5000);
 }
