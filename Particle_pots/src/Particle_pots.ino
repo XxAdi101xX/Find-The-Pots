@@ -7,9 +7,9 @@
 MMA7660 accelerometer;
 void setup()
 {
-  Wire.setSpeed(100000);
+  Wire.setSpeed(100000); //clock speed
   Wire.begin();
-  accelerometer.init();
+  accelerometer.init(); //prep accelerometer
   Serial.begin(9600);
 }
 
@@ -18,41 +18,31 @@ void setup()
 
 void loop()
 {
-  int8_t x;
-  int8_t y;
-  int8_t z;
-  float ax,ay,az;
-  MMA7660_ACC_DATA accelData;
 
-  accelerometer.getXYZ(&x,&y,&z);
+  MMA7660_ACC_DATA accelData; //data structure for acceleration data
 
 
-  Serial.print("x = ");
-    Serial.println(x);
-    Serial.print("y = ");
-    Serial.println(y);
-    Serial.print("z = ");
-    Serial.println(z);
 
-  //accelerometer.getAcceleration(&ax,&ay,&az);
-  accelerometer.getAcceleration(&accelData);
-    Serial.println("accleration of X/Y/Z: ");
-//  Serial.print(ax);
-Serial.print(accelData.x.g);
+  accelerometer.getAcceleration(&accelData); //get accel data from accelerometer
+
+
+  Serial.println("accleration of X/Y/Z: ");
+
+  Serial.print(accelData.x.g); //print x acceleration
   Serial.println(" g");
-//  Serial.print(ay);
-Serial.print(accelData.y.g);
+
+  Serial.print(accelData.y.g); //print y acceleration
   Serial.println(" g");
-  //Serial.print(az);
-  Serial.print(accelData.z.g);
+
+  Serial.print(accelData.z.g); //print z acceleration
   Serial.println(" g");
   Serial.println("*************");
   delay(2000);
 
-//int z_test = 44;
 
-String z_val = String(accelData.z.g);
 
-  Particle.publish("z_val", z_val, PRIVATE);
+String z_val = String(accelData.z.g); //convert float to string
+
+  Particle.publish("z_val", z_val, PRIVATE); //publish z value 
   delay(5000);
 }
