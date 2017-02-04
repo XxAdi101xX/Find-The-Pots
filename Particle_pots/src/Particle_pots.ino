@@ -4,28 +4,28 @@
 #include "MMA7660.h"
 
 
-MMA7660 accelemeter;
+MMA7660 accelerometer;
 void setup()
 {
-  Wire.setSpeed(120);
+  Wire.setSpeed(100000);
   Wire.begin();
-  accelemeter.init();
+  accelerometer.init();
   Serial.begin(9600);
-
-  // Subscribe to the integration response event
-  Particle.subscribe("hook-response/z_val", myHandler, MY_DEVICES);
-
 }
+
+
+
+
 void loop()
 {
-
-
-// accelemeter stuff
   int8_t x;
   int8_t y;
   int8_t z;
   float ax,ay,az;
-  accelemeter.getXYZ(&x,&y,&z);
+  MMA7660_ACC_DATA accelData;
+
+  accelerometer.getXYZ(&x,&y,&z);
+
 
   Serial.print("x = ");
     Serial.println(x);
@@ -34,26 +34,25 @@ void loop()
     Serial.print("z = ");
     Serial.println(z);
 
-  accelemeter.getAcceleration(&ax,&ay,&az);
+  //accelerometer.getAcceleration(&ax,&ay,&az);
+  accelerometer.getAcceleration(&accelData);
     Serial.println("accleration of X/Y/Z: ");
-  Serial.print(ax);
+//  Serial.print(ax);
+Serial.print(accelData.x.g);
   Serial.println(" g");
-  Serial.print(ay);
+//  Serial.print(ay);
+Serial.print(accelData.y.g);
   Serial.println(" g");
-  Serial.print(az);
+  //Serial.print(az);
+  Serial.print(accelData.z.g);
   Serial.println(" g");
   Serial.println("*************");
-  delay(500);
+  delay(2000);
 
 //int z_test = 44;
 
-String z_val = String(az);
+String z_val = String(accelData.z.g);
 
   Particle.publish("z_val", z_val, PRIVATE);
   delay(5000);
-}
-
-void myHandler(const char *event, const char *data) {
-  // Handle the integration response
-  Serial.println("event");
 }

@@ -170,9 +170,6 @@ bool MMA7660::getAcceleration(float *ax,float *ay,float *az)
     *az = (z/21.00);
 
 
-  /*  *ax = accLookup[x];
-    *ay = accLookup[y];
-    *az = accLookup[z]; */
 
     return 1;
 }
