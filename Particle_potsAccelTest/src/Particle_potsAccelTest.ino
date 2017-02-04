@@ -4,12 +4,12 @@
 #include "MMA7660.h"
 
 
-MMA7660 accelemeter;
+MMA7660 accelerometer;
 void setup()
 {
-  Wire.setSpeed(120);
+  Wire.setSpeed(100000);
   Wire.begin();
-  accelemeter.init();
+  accelerometer.init();
   Serial.begin(9600);
 }
 void loop()
@@ -18,7 +18,10 @@ void loop()
   int8_t y;
   int8_t z;
   float ax,ay,az;
-  accelemeter.getXYZ(&x,&y,&z);
+  MMA7660_ACC_DATA accelData;
+
+  accelerometer.getXYZ(&x,&y,&z);
+
 
   Serial.print("x = ");
     Serial.println(x);
@@ -27,14 +30,18 @@ void loop()
     Serial.print("z = ");
     Serial.println(z);
 
-  accelemeter.getAcceleration(&ax,&ay,&az);
+  //accelerometer.getAcceleration(&ax,&ay,&az);
+  accelerometer.getAcceleration(&accelData);
     Serial.println("accleration of X/Y/Z: ");
-  Serial.print(ax);
+//  Serial.print(ax);
+Serial.print(accelData.x.g);
   Serial.println(" g");
-  Serial.print(ay);
+//  Serial.print(ay);
+Serial.print(accelData.y.g);
   Serial.println(" g");
-  Serial.print(az);
+  //Serial.print(az);
+  Serial.print(accelData.z.g);
   Serial.println(" g");
   Serial.println("*************");
-  delay(500);
+  delay(2000);
 }

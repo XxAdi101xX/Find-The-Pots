@@ -94,6 +94,7 @@ void MMA7660::initAccelTable() {
         accLookup[i].xyAngle = 255;
         accLookup[i].zAngle = 255;
     }
+
 }
 
 void MMA7660::init()
@@ -164,9 +165,11 @@ bool MMA7660::getAcceleration(float *ax,float *ay,float *az)
 {
     int8_t x,y,z;
     if(!getXYZ(&x,&y,&z))return 0;
-    *ax = x/21.00;
-    *ay = y/21.00;
+    *ax = (x/21.00);
+    *ay = (y/21.00);
     *az = (z/21.00);
+
+
 
     return 1;
 }
