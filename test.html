@@ -1,49 +1,39 @@
-<!DOCTYPE html>
+
+
 <html>
+  <head>
+    <meta charset="utf-8">
+    <title>Heatmaps</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
 
-<head>
-  <title>Simple Map</title>
-  <meta name="viewport" content="initial-scale=1.0">
-  <meta charset="utf-8">
-  <style>
-    /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-    
-    #map {
-      height: 100%;
-    }
-    /* Optional: Makes the sample page fill the window. */
-    
-    html,
-    body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
-  </style>
-  <script src="https://www.gstatic.com/firebasejs/3.6.8/firebase.js"></script>
-  <script>
-    // Initialize Firebase
-    var config = {
-      apiKey: "AIzaSyAROLvTCvL25bU1tJRlmVpHZIUw80Vhj_g",
-      authDomain: "find-my-pots.firebaseapp.com",
-      databaseURL: "https://find-my-pots.firebaseio.com",
-      storageBucket: "find-my-pots.appspot.com",
-      messagingSenderId: "117951375558"
-    };
-    firebase.initializeApp(config);
-  </script>
-  <script type="text/javascript" src="potholemap.js"></script>
-  <script type="text/javascript" src="firebasedb.js"></script> 
-  
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_YGFw6rD7_TL2dbNpzKqhB0YH8YFzsdo&callback=initMap" async
-    defer></script>
-  
-</head>
+  <body>
+     <div id="floating-panel">
+    <b>Start: </b>
+    <select id="start">
+      <option value="penn station, new york, ny">Penn Station</option>
+      <option value="grand central station, new york, ny">Grand Central Station</option>
+      <option value="625 8th Avenue, New York, NY, 10018">Port Authority Bus Terminal</option>
+      <option value="staten island ferry terminal, new york, ny">Staten Island Ferry Terminal</option>
+      <option value="101 E 125th Street, New York, NY">Harlem - 125th St Station</option>
+    </select>
+    <b>End: </b>
+    <select id="end">
+      <option value="260 Broadway New York NY 10007">City Hall</option>
+      <option value="W 49th St & 5th Ave, New York, NY 10020">Rockefeller Center</option>
+      <option value="moma, New York, NY">MOMA</option>
+      <option value="350 5th Ave, New York, NY, 10118">Empire State Building</option>
+      <option value="253 West 125th Street, New York, NY">Apollo Theater</option>
+      <option value="1 Wall St, New York, NY">Wall St</option>
+    </select>
+    </div>
+    <div id="right-panel"></div>
+    <div id="map"></div>
 
-<body>
-  <div id="map"></div>
-
-</body>
-
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_YGFw6rD7_TL2dbNpzKqhB0YH8YFzsdo
+&libraries=visualization&callback=initMap">
+    </script>
+    <script src="potholemap.js"></script>
+  </body>
 </html>
