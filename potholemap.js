@@ -90,6 +90,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
         directionsService.route({
           origin: start,
           destination: end,
+          provideRouteAlternatives: true,
           travelMode: 'DRIVING'
         }, 
         function(response, status) {
