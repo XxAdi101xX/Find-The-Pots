@@ -17,7 +17,7 @@ const express = require('express');
 const path = require('path');
 
 const app = express();
-let html = path.resolve(__dirname + '/../..');
+let html = path.resolve(__dirname + '');
 
 app.use(express.static(html));
 
