@@ -14,15 +14,19 @@
 'use strict';
 
 const express = require('express');
+const path = require('path');
 
 const app = express();
+let html = path.resolve(__dirname + '/../..');
+
+app.use(express.static(html));
 
 // [START hello_world]
 // Say hello!
-app.get('/', (req, res) => {
-  res.status(200).send('Hello, Qhacks!');
-});
-// [END hello_world]
+// app.get('/', (req, res) => {
+//   res.status(200).sendFile(html);
+// });
+// // [END hello_world]
 
 if (module === require.main) {
   // [START server]
