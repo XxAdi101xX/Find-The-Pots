@@ -96,6 +96,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
         function(response, status) {
           if (status === 'OK') {
             directionsDisplay.setDirections(response);
+            console.log(directionsDisplay.panel.innerText);
           } else {
             window.alert('Directions request failed due to ' + status);
           }
