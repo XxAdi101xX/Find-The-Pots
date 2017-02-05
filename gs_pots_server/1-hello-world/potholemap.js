@@ -123,7 +123,9 @@ function getPoints() {
         //453 Frontenac St
         new google.maps.LatLng(44.234718, -76.498984),
         //212 University Ave
-        new google.maps.LatLng(44.230295, -76.495676)
+        new google.maps.LatLng(44.230295, -76.495676),
+        // current location
+        new google.maps.LatLng(44.225972, -76.495943)
     ];
 }
 
@@ -173,7 +175,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
                     console.log(directionsDisplay.directions.routes[i].legs[0].steps[j].instructions);
                     for (var k = 0; k < allPotHoles; ++k) {
                         if ((directionsDisplay.directions.routes[i].legs[0].steps[j].instructions).includes(potHoles[k])) {
-                            document.getElementById("info-panel").innerHTML += ("Be advised of potholes on " + potHoles[k] + " for Route" + routeNum + ". " + '<br>');
+                            document.getElementById("info-panel").innerHTML += ("Be advised of potholes on " + potHoles[k] + " for Route " + routeNum + ". " + '<br>');
                         }
                     }
                 }
