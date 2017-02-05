@@ -4,6 +4,7 @@
 #include "MMA7660.h"
 
 
+
 MMA7660 accelerometer;
 void setup()
 {
@@ -18,33 +19,41 @@ void setup()
 
 void loop()
 {
-
+  int eventType; // 0=no event, 1=minor, 2=moderate, 3=major
   MMA7660_ACC_DATA accelData; //data structure for acceleration data
-
+  int count = 0; //keeps track of duration of 'event'
 
 
   accelerometer.getAcceleration(&accelData); //get accel data from accelerometer
 
-  if ((accelData.z.g > 1.4) || (accelData.z.g < 0.6)){ //publish only if 'event' has occured
-    Serial.print("event");
-    Serial.println(accelData.z.g);
-    String z_val = String(accelData.z.g); //convert float to string
+  while ((accelData.z.g > 1.4) || (accelData.z.g < 0.6)){ //publish only if 'event' has occured
+    count += count;
+    accelerometer.getAcceleration(&accelData); //get accel data from accelerometer
+    Particle.process();
+  }
+  if (count < 10){ //no event
+    eventType = 0;
+  }
+  else if (count < 100){ //minor pothole event
+    eventType = 1;
+  }
+  else if (count < 500){ //moderate pothole event
+    eventType = 2;
+  }
+  else{             //major pothole event
+    eventType = 3;
+  }
 
-    Particle.publish("z_val", z_val, PRIVATE); //publish z value
+
+
+  if (eventType != 0){
+    String eventTypeStr = String(eventType); //convert float to string
+
+    Particle.publish("Event Type", eventTypeStr, PRIVATE); //publish event type
 
   }
-  /* Serial.println("accleration of X/Y/Z: ");
 
-  Serial.print(accelData.x.g); //print x acceleration
-  Serial.println(" g");
-
-  Serial.print(accelData.y.g); //print y acceleration
-  Serial.println(" g");
-
-  Serial.print(accelData.z.g); //print z acceleration
-  Serial.println(" g");
-  Serial.println("*************"); */
-  delay(500);
+  delay(1000);
 
 
 
