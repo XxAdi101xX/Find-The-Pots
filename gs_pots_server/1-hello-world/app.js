@@ -37,5 +37,58 @@ if (module === require.main) {
   });
   // [END server]
 }
+// Imports the Google Cloud client library
+const PubSub = require(`@google-cloud/pubsub`);
+process.env.GCLOUD_PROJECT = 'findthepots';
 
-module.exports = app;
+// [START pubsub_list_topics]
+function listTopics () {
+  // Instantiates a client
+  const pubsub = PubSub();
+
+  // Lists all topics in the current project
+  return pubsub.getTopics()
+    .then((results) => {
+      const topics = results[0];
+
+      console.log('Topics:');
+      topics.forEach((topic) => console.log(topic.name));
+
+      return topics;
+    }).catch(console.log);
+}
+
+setIntervallistTopics();
+
+let messages = [];
+let count = 0;
+// pubsub.on('message', function(messageIn) {
+//   message = messageIn;
+// })
+
+setInterval(function() {
+  messages.push(count++)
+},500);
+
+app.get('/message', (req, res) => {
+  res.json(messages);
+  messages = [];
+});
+
+function createSubscription (topicName, subscriptionName) {
+  // Instantiates a client
+  const pubsub = PubSub();
+
+  // References an existing topic, e.g. "my-topic"
+  const topic = pubsub.topic(topicName);
+
+  // Creates a new subscription, e.g. "my-new-subscription"
+  return topic.subscribe(subscriptionName)
+    .then((results) => {
+      const subscription = results[0];
+
+      console.log(`Subscription ${subscription.name} created.`);
+
+      return subscription;
+    });
+}

@@ -3,7 +3,6 @@
 // <script
 // src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=visual
 // ization">
-
 var map, heatmap;
 
 function initMap() {
@@ -113,41 +112,14 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
           }
         });        
 }
-/*
-const PubSub = require('@google-cloud/pubsub');
 
-// Your Google Cloud Platform project ID
-const projectId = 'FindThePots';
-
-// Instantiates a client
-const pubsubClient = PubSub({
-  projectId: projectId
-});
-
-const topicName = 'my-new-topic';
-
-// Creates the new topic
-pubsubClient.createTopic(topicName)
-  .then((results) => {
-    const topic = results[0];
-    console.log(`Topic ${topic.name} created.`);
-});
-
-// [START pubsub_list_subscriptions]
-function listSubscriptions () {
-  // Instantiates a client
-  const pubsub = PubSub();
-
-  // Lists all subscriptions in the current project
-  return pubsub.getSubscriptions()
-    .then((results) => {
-      const subscriptions = results[0];
-
-      console.log('Subscriptions:');
-      subscriptions.forEach((subscription) => console.log(subscription.name));
-
-      return subscriptions;
-    });
+function getMessage() {
+    return fetch('/message')
+        .then(response => response.json())
+        .then(console.log)
 }
-// [END pubsub_list_subscriptions]
-*/
+
+setInterval(getMessage, 2000);
+
+
+
