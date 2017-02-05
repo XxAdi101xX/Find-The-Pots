@@ -88,7 +88,7 @@ function createSubscription (topicName, subscriptionName) {
     });
 }
 
-createSubscription('accel_data', 'main-sub');
+createSubscription('accel_data', 'photon_accel');
 
 function pullMessages (subscriptionName) {
   // Instantiates a client
@@ -102,7 +102,7 @@ function pullMessages (subscriptionName) {
   return subscription.pull()
     .then((results) => {
       const messages = results[0];
-
+      //returnImmediately = false;
       console.log(`Received ${messages.length} messages.`);
 
       messages.forEach((message) => {
@@ -112,7 +112,10 @@ function pullMessages (subscriptionName) {
       // Acknowledges received messages. If you do not acknowledge, Pub/Sub will
       // redeliver the message.
       return subscription.ack(messages.map((message) => message.ackId));
-    });
+    }).catch(console.log);
 }
 
-pullMessages('main-sub');
+pullMessages('photon_accel');
+app.get('/updates', (req, res) => {
+  res.json(pullMessages('main-sub'));
+});

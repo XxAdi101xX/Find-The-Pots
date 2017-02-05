@@ -113,13 +113,22 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
         });        
 }
 
-function getMessage() {
+/*function getMessage() {
     return fetch('/message')
         .then(response => response.json())
         .then(console.log)
+}*/
+
+//setInterval(getMessage, 2000);
+const num = 0;
+
+function getUpdate() {
+    return fetch('/updates')
+        .then(response => console.log(response))
+       // .then(console.log)
 }
 
-setInterval(getMessage, 2000);
+//setInterval(getUpdate, 1000);
 
 
 
