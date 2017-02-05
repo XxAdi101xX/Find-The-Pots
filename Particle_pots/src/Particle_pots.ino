@@ -25,35 +25,40 @@ void loop()
 
 
   accelerometer.getAcceleration(&accelData); //get accel data from accelerometer
+  Serial.println(accelData.z.g);
 
   while ((accelData.z.g > 1.4) || (accelData.z.g < 0.6)){ //publish only if 'event' has occured
-    count += count;
+    count = count + 1;
     accelerometer.getAcceleration(&accelData); //get accel data from accelerometer
     Particle.process();
+    Serial.println(accelData.z.g);
+    Serial.print("count: ");
+    Serial.println(count);
+    delay(50);
   }
-  if (count < 10){ //no event
+  if (count < 2){ //no event
     eventType = 0;
   }
-  else if (count < 100){ //minor pothole event
+  else if (count < 5){ //minor pothole event
     eventType = 1;
   }
-  else if (count < 500){ //moderate pothole event
+  else if (count < 10){ //moderate pothole event
     eventType = 2;
   }
   else{             //major pothole event
     eventType = 3;
   }
-
-
+  Serial.println(eventType);
+    Particle.process();
 
   if (eventType != 0){
-    String eventTypeStr = String(eventType); //convert float to string
+    String z_val = String(eventType); //convert float to string
 
-    Particle.publish("Event Type", eventTypeStr, PRIVATE); //publish event type
+    Particle.publish("z_val", z_val, PRIVATE); //publish event type
 
   }
 
-  delay(1000);
+  delay(500);
 
 
 
