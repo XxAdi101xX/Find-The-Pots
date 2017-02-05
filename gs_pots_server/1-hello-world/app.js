@@ -117,5 +117,5 @@ function pullMessages (subscriptionName) {
 
 pullMessages('photon_accel');
 app.get('/updates', (req, res) => {
-  res.json(pullMessages('main-sub'));
+  res.json(pullMessages('photon_accel'));
 });

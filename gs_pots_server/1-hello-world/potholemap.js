@@ -79,10 +79,54 @@ function changeOpacity() {
 function getPoints() {
     return [
         new google.maps.LatLng(44.2253, -76.4951),
-        new google.maps.LatLng(44.2260, -76.4954)
+        new google.maps.LatLng(44.2260, -76.4954),
+         //1324 Princess St
+        new google.maps.LatLng(44.239422, -76.529734),
+        //880-884 Johnson St
+        new google.maps.LatLng(44.230944, -76.514128),
+        //194 King St W
+        new google.maps.LatLng(44.222468, -76.500454),
+        //307 Union St W
+        new google.maps.LatLng(44.225921, -76.505329),
+        //269 Division St
+        new google.maps.LatLng(44.236246, -76.493767),
+        //212 Montreal St
+        new google.maps.LatLng(44.237621, -76.485272),
+        //154 Bagot St
+        new google.maps.LatLng(44.228684, -76.486446),
+        //94 Quebec St
+        new google.maps.LatLng(44.238808, -76.492700),
+        //208 Regent St
+        new google.maps.LatLng(44.237026, -76.509272),
+        //180 Toronto St
+        new google.maps.LatLng(44.235430, -76.504274),
+        //453 Frontenac St
+        new google.maps.LatLng(44.234718, -76.498984),
+        //212 University Ave
+        new google.maps.LatLng(44.230295, -76.495676)
     ];
 }
 
+var potHoles = 
+[
+    "Princess St",
+    "Bath Rd",
+    "King St W",
+    "Union St W",
+    "Division St",
+    "Montreal St",
+    "Bagot St",
+    "Quebec St",
+    "Regent St",
+    "Toronto St",
+    "Frontenac St",
+    "University Ave",
+    "Johnson St",
+    "Concession St"
+];
+
+var allPotHoles = potHoles.length;
+var routeNum = 1;
 function calculateAndDisplayRoute(directionsService, directionsDisplay) {
         var start = document.getElementById('start').value;
         var end = document.getElementById('end').value;
@@ -93,18 +137,25 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
           travelMode: 'DRIVING'
         }, 
         function(response, status) {
-          if (status === 'OK') {
+          if (status === 'OK') {              
             directionsDisplay.setDirections(response);
             //console.log(directionsDisplay.panel.innerText);
             console.log(directionsDisplay.directions.routes[0].legs[0].steps[0].instructions);
             var altDirections = directionsDisplay.directions.routes.length;
             var instrLength;
+            document.getElementById("info-panel").innerHTML = '<div id="title">' + "Pothole Advisory" + '</div>' + '<br>';
             for (var i = 0; i < altDirections; ++i) {
+                routeNum = i + 1;
                 instrLength = directionsDisplay.directions.routes[i].legs[0].steps.length;
                 for (var j = 0; j < instrLength; ++j) {
                     // iterate through all the things in the database 
                     // and see if the road exists in steps[j].instructions
-                    //console.log(directionsDisplay.directions.routes[i].legs[0].steps[j].instructions);
+                    console.log(directionsDisplay.directions.routes[i].legs[0].steps[j].instructions);
+                    for (var k = 0; k < allPotHoles; ++k) {
+                        if ((directionsDisplay.directions.routes[i].legs[0].steps[j].instructions).includes(potHoles[k])) {
+                            document.getElementById("info-panel").innerHTML += ("Be advised of potholes on " + potHoles[k] + " for Route" + routeNum + ". " + '<br>');
+                        }
+                    }
                 }
             }
           } else {
@@ -120,12 +171,28 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
 }*/
 
 //setInterval(getMessage, 2000);
+
+
 const num = 0;
 
 function getUpdate() {
+    substring1 = 'Received 1 Messages';
+    substring2 = 'Received 2 Messages';
+    substring3 = 'Received 3 Messages';
+    substring4 = 'Received 4 Messages';
+    substring5 = 'Received 5 Messages';
+    substring6 = 'Received 6 Messages';
     return fetch('/updates')
-        .then(response => console.log(response))
-       // .then(console.log)
+        .then(response => console.log(response))//(function(){return response.includes(substring1)})
+        /*.then(if (response.includes(substring1) 
+                || response.includes(substring2)
+                || response.includes(substring3)
+                || response.includes(substring4)
+                || response.includes(substring5)
+                || response.includes(substring6)) {
+
+                console.log('hiiiiiiiiiiiiiiiii');
+            }*/
 }
 
 //setInterval(getUpdate, 1000);
