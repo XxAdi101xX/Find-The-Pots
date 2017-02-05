@@ -97,9 +97,57 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
           if (status === 'OK') {
             directionsDisplay.setDirections(response);
             //console.log(directionsDisplay.panel.innerText);
-            console.log(directionsDisplay);
+            console.log(directionsDisplay.directions.routes[0].legs[0].steps[0].instructions);
+            var altDirections = directionsDisplay.directions.routes.length;
+            var instrLength;
+            for (var i = 0; i < altDirections; ++i) {
+                instrLength = directionsDisplay.directions.routes[i].legs[0].steps.length;
+                for (var j = 0; j < instrLength; ++j) {
+                    // iterate through all the things in the database 
+                    // and see if the road exists in steps[j].instructions
+                    //console.log(directionsDisplay.directions.routes[i].legs[0].steps[j].instructions);
+                }
+            }
           } else {
             window.alert('Directions request failed due to ' + status);
           }
-        });
+        });        
 }
+/*
+const PubSub = require('@google-cloud/pubsub');
+
+// Your Google Cloud Platform project ID
+const projectId = 'FindThePots';
+
+// Instantiates a client
+const pubsubClient = PubSub({
+  projectId: projectId
+});
+
+const topicName = 'my-new-topic';
+
+// Creates the new topic
+pubsubClient.createTopic(topicName)
+  .then((results) => {
+    const topic = results[0];
+    console.log(`Topic ${topic.name} created.`);
+});
+
+// [START pubsub_list_subscriptions]
+function listSubscriptions () {
+  // Instantiates a client
+  const pubsub = PubSub();
+
+  // Lists all subscriptions in the current project
+  return pubsub.getSubscriptions()
+    .then((results) => {
+      const subscriptions = results[0];
+
+      console.log('Subscriptions:');
+      subscriptions.forEach((subscription) => console.log(subscription.name));
+
+      return subscriptions;
+    });
+}
+// [END pubsub_list_subscriptions]
+*/
